@@ -6,9 +6,10 @@ import contactsList from './data/contacts.json';
 import { ContactList } from './ContactsList';
 import { Filter } from './Filter';
 
+const contacts = localStorage.getItem('contacts') !== null ? JSON.parse(localStorage.getItem('contacts')) : [];
 class App extends Component {
   static defaultProps = {
-    contacts: contactsList,
+    contacts: contacts,
     filter: "",
   }
 
@@ -29,6 +30,7 @@ class App extends Component {
     : this.state.contacts.find(contact => 
         contact.number === data.number) ? alert("The number  is already exist") 
     : this.setState((prevState) => {
+      localStorage.setItem('contacts', JSON.stringify([...prevState.contacts, newContact]));
        return {contacts: [...prevState.contacts, newContact]}
     })
   }
