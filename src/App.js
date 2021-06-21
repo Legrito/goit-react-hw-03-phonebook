@@ -2,7 +2,6 @@ import './App.css';
 import { Component } from 'react';
 import shortid from 'shortid';
 import { ContactForm } from './Form';
-import contactsList from './data/contacts.json';
 import { ContactList } from './ContactsList';
 import { Filter } from './Filter';
 
@@ -41,9 +40,10 @@ class App extends Component {
 
   deleteContact = ( e ) => {
     const currentId = e.currentTarget.name;
-    this.setState((prevState) => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== currentId),
-    }));
+    this.setState((prevState) => {
+      localStorage.setItem('contacts', JSON.stringify(prevState.contacts.filter(contact => contact.id !== currentId)));
+     return { contacts: prevState.contacts.filter(contact => contact.id !== currentId),};
+    });
   };
 
   render() {
